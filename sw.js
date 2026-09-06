@@ -1,6 +1,7 @@
-const CACHE_STATIC = "ttb-static-v10";
-const CACHE_TEXT = "ttb-text-v10";
-const PRECACHE = ["./","./index.html","./manifest.webmanifest","./assets/index.js","./assets/routes.js","./assets/styles.css"];
+const CACHE_STATIC = "ttb-static-v11";
+const CACHE_TEXT = "ttb-text-v11";
+const PRECACHE = ["./","./index.html","./manifest.webmanifest","./assets/index.js","./assets/routes.js","./assets/styles.css",
+  "./og-ttb-v1.jpg"];
 self.addEventListener("install", (e) => e.waitUntil(caches.open(CACHE_STATIC).then((c)=>c.addAll(PRECACHE)).then(()=>self.skipWaiting())));
 self.addEventListener("activate", (e) => e.waitUntil(caches.keys().then((keys)=>Promise.all(keys.filter((k)=>k!==CACHE_STATIC&&k!==CACHE_TEXT).map((k)=>caches.delete(k)))).then(()=>self.clients.claim())));
 function isTextJson(url){try{return /\/text\/[^/]+\.json$/i.test(new URL(url).pathname)}catch{return false}}
