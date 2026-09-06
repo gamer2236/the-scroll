@@ -1,6 +1,6 @@
 /* The Time Traveler Bible */
-const CACHE_STATIC = "ttb-static-v7";
-const CACHE_TEXT = "ttb-text-v7";
+const CACHE_STATIC = "ttb-static-v8";
+const CACHE_TEXT = "ttb-text-v8";
 const PRECACHE = ["./","./index.html","./manifest.webmanifest","./ttb-mark2-192.png","./ttb-mark2-512.png","./assets/index.js","./assets/routes.js","./assets/styles.css"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE_STATIC).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", (e) => { e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE_STATIC && k !== CACHE_TEXT).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
