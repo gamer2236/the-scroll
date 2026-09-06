@@ -1,4 +1,4 @@
-/* The Time Travelers Bible — service worker v5 */
+/* The Time Traveler Bible — service worker v5 */
 const CACHE_STATIC = "ttb-static-v5";
 const CACHE_TEXT = "ttb-text-v1";
 const PRECACHE = [
