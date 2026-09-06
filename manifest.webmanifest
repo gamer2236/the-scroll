@@ -1,9 +1,9 @@
 {
-  "id": "/the-scroll/?app=ttb-v6",
+  "id": "/the-scroll/?app=ttb-v7",
   "name": "The Time Traveler Bible",
   "short_name": "The Time Traveler Bible",
   "description": "Scripture in the order it happened.",
-  "start_url": "./?v=6",
+  "start_url": "./?v=7",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",

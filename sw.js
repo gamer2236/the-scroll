@@ -1,6 +1,6 @@
-/* The Time Travelers Bible — service worker (GitHub Pages /the-scroll/) */
-const CACHE_STATIC = "ttb-static-v4";
-const CACHE_TEXT = "ttb-text-v4";
+/* The Time Traveler Bible — service worker */
+const CACHE_STATIC = "ttb-static-v5";
+const CACHE_TEXT = "ttb-text-v5";
 
 const PRECACHE = [
   "./",
@@ -10,8 +10,8 @@ const PRECACHE = [
   "./ttb-mark2-512.png",
   "./ttb-apple-touch-icon.png",
   "./assets/index.js",
-  "./assets/routes.js",
-  "./assets/styles.css",
+  "./assets/routes-v5.js",
+  "./assets/styles-v5.css",
 ];
 
 self.addEventListener("install", (event) => {
@@ -23,19 +23,22 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(
-        keys
-          .filter((k) => k !== CACHE_STATIC && k !== CACHE_TEXT)
-          .map((k) => caches.delete(k))
-      )
+      Promise.all(keys.filter((k) => k !== CACHE_STATIC && k !== CACHE_TEXT).map((k) => caches.delete(k)))
     ).then(() => self.clients.claim())
   );
 });
 
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "TTB_CLEAR_CACHE") {
+    event.waitUntil(
+      caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k)))).then(() => self.skipWaiting())
+    );
+  }
+});
+
 function isTextJson(url) {
   try {
-    const u = new URL(url);
-    return /\/text\/[^/]+\.json$/i.test(u.pathname);
+    return /\/text\/[^/]+\.json$/i.test(new URL(url).pathname);
   } catch {
     return false;
   }
@@ -44,10 +47,8 @@ function isTextJson(url) {
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
-
   const url = req.url;
 
-  // Scripture JSON: network-first, fall back to cache
   if (isTextJson(url)) {
     event.respondWith(
       fetch(req)
@@ -63,32 +64,34 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Same-origin navigation / static: cache-first, then network
   const dest = req.destination;
   const isNav = req.mode === "navigate";
-  const isAsset =
+  const isShell =
+    isNav ||
     dest === "script" ||
     dest === "style" ||
-    dest === "image" ||
-    dest === "font" ||
     dest === "manifest" ||
-    url.includes("/assets/");
+    url.includes("/assets/") ||
+    url.includes("sw.js");
 
-  if (isNav || isAsset) {
+  // Network-first for app shell so updates land; cache as fallback (offline)
+  if (isShell) {
     event.respondWith(
-      caches.match(req).then((cached) => {
-        if (cached) return cached;
-        return fetch(req).then((res) => {
+      fetch(req)
+        .then((res) => {
           if (res && res.ok) {
             const copy = res.clone();
             caches.open(CACHE_STATIC).then((c) => c.put(req, copy));
           }
           return res;
-        }).catch(() => {
-          if (isNav) return caches.match("./index.html");
-          return Response.error();
-        });
-      })
+        })
+        .catch(() =>
+          caches.match(req).then((cached) => {
+            if (cached) return cached;
+            if (isNav) return caches.match("./index.html");
+            return Response.error();
+          })
+        )
     );
   }
 });
