@@ -1,31 +1,17 @@
 {
-  "name": "The Time Travelers Bible",
-  "short_name": "TT Bible",
+  "id": "/the-scroll/?app=ttb-v6",
+  "name": "The Time Traveler Bible",
+  "short_name": "The Time Traveler Bible",
   "description": "Scripture in the order it happened.",
-  "start_url": "./",
+  "start_url": "./?v=6",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#07060c",
+  "background_color": "#000000",
   "theme_color": "#07060c",
   "icons": [
-    {
-      "src": "./ttb-icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./ttb-icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./ttb-icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
+    { "src": "./ttb-mark2-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./ttb-mark2-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./ttb-mark2-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
