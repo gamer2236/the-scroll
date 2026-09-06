@@ -1,6 +1,6 @@
 /* The Time Travelers Bible — service worker (GitHub Pages /the-scroll/) */
-const CACHE_STATIC = "ttb-static-v3";
-const CACHE_TEXT = "ttb-text-v3";
+const CACHE_STATIC = "ttb-static-v4";
+const CACHE_TEXT = "ttb-text-v4";
 
 const PRECACHE = [
   "./",
