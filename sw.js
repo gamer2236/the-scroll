@@ -1,15 +1,15 @@
 /* The Time Travelers Bible — service worker (GitHub Pages /the-scroll/) */
-const CACHE_STATIC = "ttb-static-v1";
+const CACHE_STATIC = "ttb-static-v2";
 const CACHE_TEXT = "ttb-text-v1";
 
 const PRECACHE = [
   "./",
   "./index.html",
-  "./manifest.webmanifest",
-  "./favicon.svg",
-  "./icon-192.png",
-  "./icon-512.png",
-  "./apple-touch-icon.png",
+  "./manifest.webmanifest?v=2",
+  "./favicon.png?v=2",
+  "./icon-192.png?v=2",
+  "./icon-512.png?v=2",
+  "./apple-touch-icon.png?v=2",
   "./assets/index.js",
   "./assets/routes.js",
   "./assets/styles.css",
